@@ -29,7 +29,6 @@ func main() {
 
 	set := flag.Bool("s", false, "Use if you want to set the otp sent to you")
 	get := flag.Bool("g", false, "Use if you want to get your data")
-	all := flag.Bool("a", false, "Use if you want all the data")
 	flag.Parse()
 
 	client := redisConnect(cfg)
@@ -83,17 +82,6 @@ func main() {
 			panic(err)
 		}
 		fmt.Printf("your OTP is:%v\t\n", val)
-	case *all:
-		data, err := app.GetAll()
-		if err != nil {
-			fmt.Printf("Error fetching data due to: %v\n", err)
-			break // Exit the case if there's an error
-		}
-
-		// Print user data in a readable format
-		for _, user := range data {
-			fmt.Printf("Phone Number: %s, OTP: %s\n", user.PhoneNumber, user.OTP)
-		}
 
 	}
 }
