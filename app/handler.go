@@ -18,7 +18,7 @@ func (app *application) SetOTP(phoneNumber, otp string) error {
 		"otp": otp,
 	}).Err()
 	if err != nil {
-		panic(err)
+		return fmt.Errorf("failed to set OTP: %w", err)
 	}
 	return nil
 }
@@ -29,7 +29,7 @@ func (app *application) GetOTP(phoneNumber string) (string, error) {
 	if err == redis.Nil {
 		return "", fmt.Errorf("no OTP found for phone number: %s", phoneNumber)
 	} else if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to retrieve OTP: %w", err)
 	}
 	return otp, nil
 }
